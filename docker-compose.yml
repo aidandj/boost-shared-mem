@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  boost-shared-mem-parent:
+    build: .
+    container_name: "boost-shared-mem-parent"
+    command: "./test"
+    ipc: "shareable"
+    # command: "tail -f /dev/null"
+  boost-shared-mem-child:
+    build: .
+    container_name: "boost-shared-mem-child"
+    # command: "./test || ./test 0"
+    command: "tail -f /dev/null"
+    ipc: "container:boost-shared-mem-parent"
+    depends_on: 
+      - "boost-shared-mem-parent"
